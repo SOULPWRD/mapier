@@ -2,7 +2,7 @@
     "name": "mapier",
     "type": "module",
     "scripts": {
-        "lint": "node ./cli/jslint.js --devel=true ./src"
+        "build": "node ./src/build.js"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^25.0.7",
