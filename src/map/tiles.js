@@ -1,24 +1,28 @@
 /*jslint
-    browser
+    browser, for
 */
 
 /*property
-    PI, abs, bottom_tile, calculateExtent, calculate_extent,
-    calculate_tile_urls, cos, floor, freeze, getSize, getView, height,
+    PI, abs, base_url, bottom_tile, calculateExtent, calculate_extent,
+    calculate_tile_urls, cos, floor, format, freeze, getSize, getView, height,
     left_tile, log, pow, push, right_tile, tan, toString, top_tile, total_tiles,
     width
 */
 
 import {transformExtent} from "ol/proj";
 
+// web mercator
 const epsg_3857 = "EPSG:3857";
+// wgs84
 const epsg_4326 = "EPSG:4326";
 
 function calculate_extent(map) {
     const size = map.getSize();
     const view = map.getView();
 
-    return view.calculateExtent(size);
+    return Object.freeze(
+        view.calculateExtent(size)
+    );
 }
 
 function lon_to_tile(lon, zoom) {
@@ -71,7 +75,13 @@ function calculate_tile_bounds(extent, zoom) {
     });
 }
 
-function calculate_tile_urls(url_base, extent, zoom) {
+// the options parameter defaults to the png format
+// and to the openstreetmap tiles url
+function calculate_tile_urls(extent, zoom, options = {}) {
+    const {
+        base_url = "https://tile.openstreetmap.org",
+        format = "png"
+    } = options;
     const {
         bottom_tile,
         left_tile,
@@ -79,18 +89,20 @@ function calculate_tile_urls(url_base, extent, zoom) {
         top_tile
     } = calculate_tile_bounds(extent, zoom);
     const urls = [];
+
+    // based on the calculated bounds
+    // the matrix of the tile coordinates is calculated
     let x;
     let y;
-
     for (y = top_tile; y <= bottom_tile; y += 1) {
         for (x = left_tile; x <= right_tile; x += 1) {
             urls.push(
-                new URL(`/${zoom}/${x}/${y}.png`, url_base).toString()
+                new URL(`/${zoom}/${x}/${y}.${format}`, base_url).toString()
             );
         }
     }
 
-    return urls;
+    return Object.freeze(urls);
 }
 
 export default Object.freeze({
