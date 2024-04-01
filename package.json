@@ -10,6 +10,7 @@
         "rollup": "^4.13.0"
     },
     "dependencies": {
+        "bunyan": "^1.8.15",
         "ol": "^9.0.0"
     }
 }
