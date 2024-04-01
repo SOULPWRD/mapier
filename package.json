@@ -7,10 +7,10 @@
     "devDependencies": {
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-node-resolve": "^15.2.3",
+        "bunyan": "^1.8.15",
         "rollup": "^4.13.0"
     },
     "dependencies": {
-        "bunyan": "^1.8.15",
         "ol": "^9.0.0"
     }
 }
