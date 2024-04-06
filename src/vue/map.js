@@ -1,3 +1,7 @@
+// A div container rendering OSM map instance
+
+/*jslint browser */
+
 import {h, ref, onMounted} from "https://esm.sh/vue";
 import make_osm_map from "../map/osm.js";
 
@@ -14,10 +18,10 @@ function create_map() {
             return h("div", {
                 ref: map_ref,
                 style: {
-                    width: "100%",
-                    height: "400px"
+                    height: "400px",
+                    width: "100%"
                 }
-            })
+            });
         };
     }
 
