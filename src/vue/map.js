@@ -2,7 +2,7 @@
 
 /*jslint browser */
 
-import {h, ref, onMounted} from "https://esm.sh/vue";
+import {h, ref, onMounted} from "vue";
 import make_osm_map from "../map/osm.js";
 
 function create_map() {

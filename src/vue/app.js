@@ -2,7 +2,7 @@
 
 /*jslint browser */
 
-import {h} from "https://esm.sh/vue";
+import {h} from "vue";
 import make_map from "./map.js";
 
 function make_app() {

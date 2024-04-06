@@ -6,7 +6,8 @@ import bunyan from "bunyan";
 import cjs from "@rollup/plugin-commonjs";
 import node from "@rollup/plugin-node-resolve";
 import parseq from "./parseq.js";
-import html from "./html.js";
+import ssr from "./vue/ssr.js";
+import make_app from "./vue/app.js";
 
 const logger = bunyan.createLogger({name: "mapier:build"});
 
@@ -36,8 +37,8 @@ function generate_bundle(input_file) {
 }
 
 function write_html(output_file) {
-    return function (callback, code) {
-        writeFile(output_file, html(code), function (err) {
+    return function (callback, html) {
+        writeFile(output_file, html, function (err) {
             if (err !== undefined) {
                 return callback(undefined, err);
             }
@@ -50,6 +51,7 @@ function write_html(output_file) {
 function build_html(input_file, output_file) {
     return parseq.sequence([
         generate_bundle(input_file),
+        ssr.render_html(make_app()),
         write_html(output_file)
     ]);
 }
