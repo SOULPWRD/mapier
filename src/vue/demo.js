@@ -2,7 +2,7 @@
 
 /*jslint browser */
 
-import {createApp} from "vue";
+import {createApp} from "https://esm.sh/vue";
 
 function run(component, props = {}) {
     document.documentElement.innerHTML = "";
