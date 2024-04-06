@@ -1,12 +1,39 @@
 /* jslint node */
 
 import {writeFile} from "node:fs";
+import {build} from "vite";
 import bunyan from "bunyan";
-import generete_bundle from "./bundle.js";
+import cjs from "@rollup/plugin-commonjs";
+import node from "@rollup/plugin-node-resolve";
 import parseq from "./parseq.js";
 import html from "./html.js";
 
 const logger = bunyan.createLogger({name: "mapier:build"});
+
+function generate_bundle(input_file) {
+    return function (callback) {
+        return build({
+            build: {
+                rollupOptions: {
+                    input: input_file,
+                    output: {
+                        format: "iife",
+                        name: "mapier"
+                    },
+                    plugins: [
+                        cjs(),
+                        node()
+                    ]
+                },
+                write: false
+            }
+        }).then(function ({output}) {
+            callback(output[0].code);
+        }).catch(function (err) {
+            callback(undefined, err);
+        });
+    };
+}
 
 function write_html(output_file) {
     return function (callback, code) {
@@ -22,7 +49,7 @@ function write_html(output_file) {
 
 function build_html(input_file, output_file) {
     return parseq.sequence([
-        generete_bundle(input_file),
+        generate_bundle(input_file),
         write_html(output_file)
     ]);
 }
