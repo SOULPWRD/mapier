@@ -1,3 +1,5 @@
+/*jslint node unordered*/
+
 import run from "https://deno.land/x/replete@0.0.15/run.js";
 
 run({
