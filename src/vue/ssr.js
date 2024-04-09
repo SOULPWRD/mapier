@@ -19,6 +19,7 @@ function render_html(app, props = {}) {
                 <!DOCTYPE html>
                 <html>
                 <head>
+                    <meta charset="utf-8">
                     <title>Vue SSR Example</title>
                 </head>
                 <body>
