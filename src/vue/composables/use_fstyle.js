@@ -6,7 +6,7 @@ import {
     readonly,
     watchEffect,
     onUnmounted,
-} from "https://esm.sh/vue";
+} from "vue";
 import fstyle from "../fstyle.js";
 
 const context = fstyle.context();
