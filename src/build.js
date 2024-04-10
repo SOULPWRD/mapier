@@ -6,8 +6,8 @@ import bunyan from "bunyan";
 import cjs from "@rollup/plugin-commonjs";
 import node from "@rollup/plugin-node-resolve";
 import parseq from "./parseq.js";
-import ssr from "./vue/ssr.js";
-import make_app from "./vue/app.js";
+import ssr from "./components/ssr.js";
+import make_app from "./components/app.js";
 
 const logger = bunyan.createLogger({name: "mapier:build"});
 
