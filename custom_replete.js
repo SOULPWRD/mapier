@@ -38,7 +38,6 @@ function custom_locate(specifier, parent_locator) {
 
 run({
     browser_port: 3000,
-    deno_args: ["--allow-all"],
     which_node: "node",
     locate: custom_locate,
     command(message) {
