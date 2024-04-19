@@ -2,6 +2,7 @@
 
 import run from "https://deno.land/x/replete@0.0.17/run.js";
 import node_resolve from "https://deno.land/x/replete@0.0.17/node_resolve.js";
+import ecomcon from "./ecomcon";
 
 function custom_locate(specifier, parent_locator) {
 
@@ -41,10 +42,7 @@ run({
     which_node: "node",
     locate: custom_locate,
     command(message) {
-        message.source = message.source.replaceAll(
-            "//demo ",
-            ""
-        );
+        message.source = ecomcon(message.source, ["demo"])
         return message;
     }
 });
