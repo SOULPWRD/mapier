@@ -5,7 +5,8 @@ import {
     ref,
     readonly,
     watchEffect,
-    onUnmounted,
+    onMounted,
+    onUnmounted
 } from "vue";
 import fstyle from "../fstyle.js";
 
@@ -14,21 +15,25 @@ const context = fstyle.context();
 function use_fstyle(styler) {
     const classes = ref([]);
     let handle;
-   
-    watchEffect(function watcher() {
-        const requireable = styler();
-        const new_handle = context.require(requireable);
-        if (handle !== undefined) {
-            handle.release();
-        }
-        classes.value = new_handle.classes;
-        handle = new_handle;
+
+// we need to watch on changes after the component is mounted
+// since styler and context manipulates with the DOM API.
+    onMounted(function () {
+        watchEffect(function watcher() {
+            const requireable = styler();
+            const new_handle = context.require(requireable);
+            if (handle !== undefined) {
+                handle.release();
+            }
+            classes.value = new_handle.classes;
+            handle = new_handle;
+        });
     });
-   
+
     onUnmounted(function () {
         handle.release();
     });
-    
+
     return readonly(classes);
 }
 
