@@ -63,9 +63,6 @@ function use_fstyle(styler) {
 //demo     });
 //demo }
 
-//demo run(demo_component())
-
-
-
+//demo run(demo_component());
 
 export default Object.freeze(use_fstyle);

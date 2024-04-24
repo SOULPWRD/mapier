@@ -2,8 +2,8 @@
 
 /*jslint browser */
 
-import make_app from "./vue/app.js";
-import ssr from "./vue/ssr.js";
+import make_app from "./components/app.js";
+import ssr from "./components/ssr.js";
 
 function init(target) {
     const app = make_app();

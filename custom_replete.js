@@ -2,7 +2,7 @@
 
 import run from "https://deno.land/x/replete@0.0.17/run.js";
 import node_resolve from "https://deno.land/x/replete@0.0.17/node_resolve.js";
-import ecomcon from "./ecomcon";
+import ecomcon from "./ecomcon.js";
 
 function custom_locate(specifier, parent_locator) {
 

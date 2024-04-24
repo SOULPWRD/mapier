@@ -61,9 +61,9 @@ build_html(
     "./src/mapier.html"
 )(function (ignore, error) {
     if (error) {
-        logger.error({error}, "An error has occurred during build");
+        logger.error({error}, "An error has occurred during build.");
         return;
     }
 
-    logger.info("The app has been succesfully build.");
+    logger.info("The app has been succesfully built.");
 });

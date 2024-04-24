@@ -13,7 +13,7 @@ function create_app(app, props = {}) {
 }
 
 function render_html(app, props = {}) {
-    return function (callback, code) {
+    return function render_to_string(callback, code) {
         return renderToString(create_app(app, props)).then(function (content) {
             return callback(`
                 <!DOCTYPE html>

@@ -5,7 +5,7 @@
 import {h, ref, onMounted} from "vue";
 import make_osm_map from "../map/osm.js";
 
-function create_map() {
+function make_map() {
     function setup() {
         const map_ref = ref(null);
 
@@ -30,8 +30,9 @@ function create_map() {
     });
 }
 
-export default Object.freeze(create_map);
-
 
 //demo import run from "./demo.js";
-//demo run(create_map());
+//demo run(make_map());
+
+export default Object.freeze(make_map);
+
