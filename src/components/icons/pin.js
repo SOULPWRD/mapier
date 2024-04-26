@@ -37,7 +37,7 @@ function setup(props = {}) {
 }
 
 //demo import run from "../demo.js";
-//demo run({ setup, props }, {scale: 10});
+//demo run({ setup, props });
 
 export default Object.freeze({
     props,
