@@ -1,5 +1,7 @@
 /*jslint */
 
+// A tool button is a type of the capbability button that enables the interaction with the map
+
 import {h} from "vue";
 import fstyle from "../fstyle.js";
 import use_fstyle from "../composables/use_fstyle.js";

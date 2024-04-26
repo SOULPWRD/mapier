@@ -1,10 +1,11 @@
 /*jslint */
 
+// A pin icon 
+
 import { h } from "vue";
 
 const props = [
     "fill",
-    "scale",
     "stroke"
 ];
 
