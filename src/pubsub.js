@@ -1,21 +1,22 @@
+/*jslint node, browser*/
+
 // Event emitter implementation
 
-function pubsub_constructor(spec = {}) {
-    let {
-        subscribers_pool = Object.create(null),
-        timers_pool = new Set
-    } = spec;
+function pubsub_constructor() {
+    let subscribers_pool = Object.create(null);
+    const timers_pool = new Set();
 
     function emit(event, data) {
         if (subscribers_pool[event] === undefined) {
-            throw Error();
+            // todo handle error
+            throw new Error();
         }
 
         subscribers_pool[event].forEach(function (listener) {
             const timer_id = setTimeout(function () {
                 try {
                     listener(data);
-                } catch (err) { 
+                } catch (err) {
                     throw err;
                 }
             });
@@ -45,9 +46,9 @@ function pubsub_constructor(spec = {}) {
     }
 
     return Object.freeze({
+        dispose,
         emit,
-        subscribe,
-        dispose
+        subscribe
     });
 }
 
