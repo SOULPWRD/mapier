@@ -84,7 +84,6 @@ function queue(spec) {
         return tasks_queue.length;
     }
 
-
     return Object.freeze({
         push,
         queue_size,
@@ -93,7 +92,7 @@ function queue(spec) {
     });
 }
 
-//demo const q = queue({concurrency: 1});
+//demo const q = queue({concurrency: 3});
 //demo function done(data, error) {}
 //demo q.push(done, 1);
 //demo q.push(done, 2);
