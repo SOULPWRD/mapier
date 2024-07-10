@@ -3,16 +3,17 @@
 import pubsub_contructor from "./pubsub.js";
 
 const events = {
-    PROCESS_TASK: "process"
+    process_task: "process_task",
+    queue_drained: "queue_drained"
 };
 
 function queue(spec) {
-    const pubsub = pubsub_contructor();
     const { concurrency } = spec;
+    const pubsub = pubsub_contructor();
     const tasks_queue = [];
     const running_tasks = new Set();
 
-    // state properties
+    // private state properties
     let is_subscribed = false;
     let is_paused = false;
 
@@ -20,7 +21,7 @@ function queue(spec) {
     function process_task() {
         const task = tasks_queue.shift();
         running_tasks.add(task);
-        pubsub.emit(events.PROCESS_TASK, task);
+        pubsub.emit(events.process_task, task);
     }
 
     // public methods
@@ -49,11 +50,17 @@ function queue(spec) {
         is_subscribed = true;
 
         const unsubscribe = pubsub.subscribe(
-            events.PROCESS_TASK,
+            events.process_task,
             function (task) {
                 listener(function (result_data, error) {
                     task.callback(result_data, error);
                     running_tasks.delete(task);
+
+                    if (tasks_queue.length === 0
+                        && running_tasks.size === 0
+                    ) {
+                        pubsub.emit(events.queue_drained);
+                    }
 
                     if (is_paused === false
                         && running_tasks.size < concurrency
@@ -76,6 +83,10 @@ function queue(spec) {
         };
     }
 
+    function on_drain(callback) {
+        pubsub.subscribe(events.queue_drained, callback);
+    }
+
     function running_size() {
         return running_tasks.size;
     }
@@ -85,6 +96,7 @@ function queue(spec) {
     }
 
     return Object.freeze({
+        on_drain,
         push,
         queue_size,
         running_size,
@@ -99,9 +111,16 @@ function queue(spec) {
 //demo q.push(done, 3);
 //demo q.subscribe(function (callback, data) {
 //demo     setTimeout(function () {
-//demo        document.body.innerHTML = data;
+//demo        const paragraph = document.createElement("p")
+//demo        paragraph.innerHTML = data;
+//demo        document.body.appendChild(paragraph);
 //demo        callback();
 //demo     }, 1000);
+//demo });
+//demo q.on_drain(function () {
+//demo     const paragraph = document.createElement("p")
+//demo     paragraph.innerHTML = "drained";
+//demo     document.body.appendChild(paragraph);
 //demo });
 
 export default Object.freeze(queue);
